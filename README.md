@@ -211,9 +211,22 @@ sudo dnf install openssl-devel alsa-lib-devel pkg-config
     ```
 
     **Nix:**
+    
+    This is the most universal way of building for nix as it works with the package manager and the OS.
     ```bash
     nix-build
+    ./result/bin/spotatui
     ```
+    However users running NixOS can opt to add it to the system configuration.
+    Best way to do this is a using an overlay.
+    ```nix
+    nixpkgs.overlays = [
+      (self: super: {
+        spotatui = self.callPackage ./pkgs/spotatui/default.nix {}; # This path is where you will have your copy of the source tree.
+      })
+    ];
+    ```
+    Then you can add spotatui as a package the way you would any normal nix package.
 
 ### Updating
 
